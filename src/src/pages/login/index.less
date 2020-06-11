@@ -1,0 +1,131 @@
+.login-container {
+  min-height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  main {
+    flex: 1;
+    width: 100%;
+
+    .logo {
+      margin-top: 20vw;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      &-image {
+        width: 60px;
+      }
+
+      &-text {
+        margin-top: 5.33vw;
+        font-size: 18px;
+      }
+    }
+
+    .login-input {
+      margin-top: 11vw;
+
+      .area-selector {
+        height: 24px;
+        line-height: 24px;
+        position: relative;
+        z-index: 1;
+        font-size: 16px;
+      }
+    }
+
+    .login-btn {
+      margin-top: 8vw;
+    }
+
+    .extra-function {
+      font-size: 14px;
+      color: #888;
+      margin-top: 10px;
+      padding: 0 15px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .optional-login {
+      margin-top: 10vw;
+      text-align: center;
+
+      .optional-text {
+        font-size: 14px;
+        color: #ccc;
+        position: relative;
+
+        & > p {
+          z-index: 2;
+          display: inline-block;
+          background-color: #fff;
+          padding: 0 5px;
+        }
+
+        &::after {
+          content: "";
+          display: block;
+          width: 194px;
+          height: 1px;
+          background: #E5E5E5;
+          transform: scaleY(0.5) translate(-50%, -50%);
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          z-index: -1;
+        }
+      }
+
+      .optional-btn {
+        margin-top: 20px;
+
+        & > div {
+          width: 40px;
+          display: inline-block;
+        }
+
+        .wechat-login {
+          margin-right: 16vw;
+        }
+
+        img {
+          width: 40px;
+          height: 40px;
+        }
+
+        p {
+          font-size: 12px;
+          color: #666;
+          margin-top: 10px;
+        }
+      }
+
+    }
+  }
+
+  footer {
+    width: 100%;
+    height: 100px;
+    text-align: center;
+    margin-top: 4vw;
+
+    &.copyright {
+      font-size: 10px;
+      font-weight: 400;
+      color: rgba(187,187,187,1);
+      line-height: 1.2;
+    }
+  }
+
+  @media (max-width: 600px) {
+    // .grid {
+    //   width: 100%;
+    //   flex-direction: column;
+    // }
+  }
+}

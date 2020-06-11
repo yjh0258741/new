@@ -1,0 +1,65 @@
+.btn-group {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0 15px;
+
+  &.no-padding {
+    padding: 0;
+  }
+
+  .btn {
+    margin-bottom: 10px;
+
+    .btn-icon {
+      width: 16px;
+      height: 16px;
+      margin-right: 10px;
+    }
+
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+  }
+
+  &.flex {
+    padding: 0;
+    display: flex;
+
+    .btn {
+      flex: 1;
+      margin-bottom: 0;
+    }
+  }
+
+  &.fixed-bottom {
+    position: fixed;
+    box-sizing: border-box;
+    bottom: 20px;
+
+    &.ipx {
+      bottom: 20 + 17px;
+    }
+
+    &.flex {
+      bottom: 0;
+      left: 0;
+      right: 0;
+
+      .btn {
+        border-bottom: none;
+        border-left: none;
+        border-right: none;
+        height: 50px;
+        line-height: 50px;
+      }
+
+      &.ipx {
+        height: 67px;
+
+        .btn {
+          height: 67px;
+        }
+      }
+    }
+  }
+}

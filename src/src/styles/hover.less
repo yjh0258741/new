@@ -1,0 +1,20 @@
+/**
+ * 处理点击态，约定: 需要点击态的元素不要设置::before属性，避免优先级不可控(小程序不支持!important)
+ * view 上的点击态的类(hover-class)统一叫做: .button-hover，与button默认值统一
+ */
+
+view.need-hover, button {
+	position: relative;
+}
+
+view.need-hover.hover:not(.disabled)::before,
+button.button-hover:not(.disabled):not(disabled)::before {
+	content: ' ';
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 1000;
+  background-color: rgba(0, 0, 0, .1);
+}

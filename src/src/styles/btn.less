@@ -1,0 +1,85 @@
+button {
+  position: relative;
+  display: block;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  color: inherit;
+  background-color: inherit;
+
+  &::after {
+    content: '';
+    border: none;
+  }
+
+  &[disabled]:not([type]),
+  &.disabled {
+    color: inherit;
+    background-color: inherit;
+    opacity: .6;
+  }
+}
+
+/* 会覆盖掉原生button样式 */
+button.pure-btn {
+  font-size: inherit;
+  text-align: inherit;
+  text-decoration: none;
+  line-height: inherit;
+  -webkit-tap-highlight-color: transparent;
+  overflow: hidden;
+  color: inherit;
+  background-color: inherit;
+}
+
+.btn {
+  position: relative;
+  font-size: 16px;
+  height: 45px;
+  line-height: 45px;
+  text-align: center;
+  background-color: #fff;
+  border-radius: 0;
+  border: 1px solid #DDDDDD;
+  color: #0052D9;
+
+  &.with-margin {
+    margin: 0 15px;
+  }
+
+  &.btn-danger {
+    border: 1px solid #DDDDDD;
+    color: #FF584C;
+
+    &[disabled]:not([type]),
+    &.disabled {
+      opacity: .6;
+      border-color: rgba(221, 221, 221, .6);
+    }
+  }
+
+  &.btn-primary {
+    border: 1px solid #0052d9;
+    background: #0052D9;
+    color: #fff;
+
+    &[disabled]:not([type]),
+    &.disabled {
+      opacity: .6;
+      border-color: rgba(0, 82, 217, .6);
+    }
+  }
+
+  &.btn-warning {
+    color: #fff;
+    background-color: #ff9c19;
+    border: 1px solid #ff9c19;
+
+    &[disabled]:not([type]),
+    &.disabled {
+      opacity: .6;
+      border-color: rgba(255, 156, 25, .6);
+    }
+  }
+}

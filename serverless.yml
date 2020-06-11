@@ -1,0 +1,30 @@
+# serverless.yml
+component: nextjs # (必填) 组件名称
+name: iot-explorer-oauth # (必填) 实例名称
+stage: dev # (可选) 用于区分环境信息，默认值是 dev
+
+inputs:
+  src:
+    src: ./src
+    exclude:
+      - .env
+  region: ap-guangzhou
+  functionName: iot-explorer-h5-oauth
+  namespace: IOT_dev
+  serviceName: iotexplorer_h5oauth_dev
+  serviceId: service-nshnzppg
+  runtime: Nodejs10.15
+  functionConf:
+    timeout: 30
+    memorySize: 128
+    environment:
+      variables:
+        NODE_ENV: production
+        OS_NAMESERVER: '100.67.92.44;100.67.92.45'
+    vpcConfig:
+      vpcId: vpc-gvemho5j
+      subnetId: subnet-6mtmnpz0
+  apigatewayConf:
+    protocols:
+      - http
+    environment: release
