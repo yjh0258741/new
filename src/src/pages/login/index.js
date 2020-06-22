@@ -94,7 +94,8 @@ export default function Login() {
 
       <main>
         <div className="logo">
-          <img src="/scf/explorerh5oauth/images/logo.png" alt="腾讯连连" className="logo-image"/>
+          <img src="//main.qcloudimg.com/raw/c23f01343fcdb4a5e945b896e1874dce/logo.png" alt="腾讯连连" className="logo-image"/>
+          {/* <img src="/scf/explorerh5oauth/images/logo.png" alt="腾讯连连" className="logo-image"/> */}
           {/* <img src="/images/logo.png" alt="腾讯连连" className="logo-image"/> */}
           <div className="logo-text">欢迎使用腾讯连连</div>
         </div>
@@ -125,6 +126,7 @@ export default function Login() {
 
           <div className="optional-btn">
             {/* <div className="wechat-login">
+              <img src="//main.qcloudimg.com/raw/6d84c8dc096b69254f799edfb9389d3d/wechat.png" alt="微信"/>
               <img src="/scf/explorerh5oauth/images/wechat.png" alt="微信"/>
               <img src="/images/wechat.png" alt="微信"/>
               <p>微信</p>
@@ -133,7 +135,8 @@ export default function Login() {
             {loginType === LoginType.Phone && (
               <div className="mail-login" onClick={() => onToggleLoginType(LoginType.Email)}>
                 <img
-                  src="/scf/explorerh5oauth/images/mail.png"
+                  src="//main.qcloudimg.com/raw/5da0639954b88eaaa02a2297a20c03af/mail.png"
+                  // src="/scf/explorerh5oauth/images/mail.png"
                   // src="/images/mail.png"
                   alt="邮箱"
                 />
@@ -144,7 +147,8 @@ export default function Login() {
             {loginType === LoginType.Email && (
               <div className="phone-login" onClick={() => onToggleLoginType(LoginType.Phone)}>
                 <img
-                  src="/scf/explorerh5oauth/images/phone.png"
+                  src="//main.qcloudimg.com/raw/a5c0033450080257c3774daa70fec31d/phone.png"
+                  // src="/scf/explorerh5oauth/images/phone.png"
                   // src="/images/phone.png"
                   alt="手机号"
                 />

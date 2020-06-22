@@ -21,7 +21,8 @@ export default function Home() {
 
       <main>
         <div className="logo">
-          <img src="/scf/explorerh5oauth/images/logo.png" alt="腾讯连连" className="logo-image"/>
+          <img src="//main.qcloudimg.com/raw/c23f01343fcdb4a5e945b896e1874dce/logo.png" alt="腾讯连连" className="logo-image"/>
+          {/* <img src="/scf/explorerh5oauth/images/logo.png" alt="腾讯连连" className="logo-image"/> */}
           {/* <img src="/images/logo.png" alt="腾讯连连" className="logo-image"/> */}
           <div className="logo-text">欢迎使用腾讯连连</div>
         </div>

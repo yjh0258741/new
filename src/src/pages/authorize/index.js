@@ -41,14 +41,16 @@ export default function Authorize() {
       </Head>
 
       <header>
-        <img src="/scf/explorerh5oauth/images/logo_with_name.png" alt="腾讯连连" className="lianlian-logo"/>
+        <img src="//main.qcloudimg.com/raw/a1b63cb4e03aae045e0a17b2ae587e82/logo_with_name.png" alt="腾讯连连" className="lianlian-logo"/>
+        {/* <img src="/scf/explorerh5oauth/images/logo_with_name.png" alt="腾讯连连" className="lianlian-logo"/> */}
         {/* <img src="/images/logo_with_name.png" alt="腾讯连连" className="lianlian-logo"/> */}
 
         <span className="account">账号：{account || '-'}</span>
       </header>
 
       <main>
-        <img src="/scf/explorerh5oauth/images/logo.png" alt="腾讯云小微" className="app-logo"/>
+        <img src="//main.qcloudimg.com/raw/c23f01343fcdb4a5e945b896e1874dce/logo.png" alt="腾讯云小微" className="app-logo"/>
+        {/* <img src="/scf/explorerh5oauth/images/logo.png" alt="腾讯云小微" className="app-logo"/> */}
         {/* <img src="/images/logo.png" alt="腾讯云小微" className="app-logo"/> */}
 
         <div className="app-name">腾讯云小微</div>

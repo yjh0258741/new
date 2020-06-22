@@ -4,10 +4,14 @@ import './Tips.less';
 import { delay, noop, getErrorMsg } from '@src/lib/utillib';
 
 const iconMap = {
-  info: '/scf/explorerh5oauth/common/icon-info.svg',
-  danger: '/scf/explorerh5oauth/common/icon-danger-white.svg',
-  loading: '/scf/explorerh5oauth/common/icon-loading.svg',
-  success: '/scf/explorerh5oauth/common/icon-success.svg',
+  info: '//main.qcloudimg.com/raw/7d2d847983da08aebdbb61501d3bea53/icon-info.svg',
+  danger: '//main.qcloudimg.com/raw/61c12548fb47b74064acecced7d5c59f/icon-danger-white.svg',
+  loading: '//main.qcloudimg.com/raw/1b5be09b703b5e17f84428d52d11dd1e/icon-loading.svg',
+  success: '//main.qcloudimg.com/raw/237e09660b3bac0bc51c3df426d76af9/icon-success.svg',
+  // info: '/scf/explorerh5oauth/common/icon-info.svg',
+  // danger: '/scf/explorerh5oauth/common/icon-danger-white.svg',
+  // loading: '/scf/explorerh5oauth/common/icon-loading.svg',
+  // success: '/scf/explorerh5oauth/common/icon-success.svg',
   // info: '/common/icon-info.svg',
   // danger: '/common/icon-danger-white.svg',
   // loading: '/common/icon-loading.svg',
