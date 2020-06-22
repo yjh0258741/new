@@ -131,24 +131,22 @@ export default function Login() {
             </div> */}
 
             {loginType === LoginType.Phone && (
-              <div className="mail-login">
+              <div className="mail-login" onClick={() => onToggleLoginType(LoginType.Email)}>
                 <img
                   src="/scf/explorerh5oauth/images/mail.png"
                   // src="/images/mail.png"
                   alt="邮箱"
-                  onClick={() => onToggleLoginType(LoginType.Email)}
                 />
                 <p>邮箱</p>
               </div>
             )}
 
             {loginType === LoginType.Email && (
-              <div className="phone-login">
+              <div className="phone-login" onClick={() => onToggleLoginType(LoginType.Phone)}>
                 <img
                   src="/scf/explorerh5oauth/images/phone.png"
                   // src="/images/phone.png"
                   alt="手机号"
-                  onClick={() => onToggleLoginType(LoginType.Phone)}
                 />
                 <p>手机号</p>
               </div>
