@@ -49,12 +49,14 @@ export default function Login() {
     }
 
     Router.push({
-      pathname: '/authorize',
+      pathname: '/scf/explorerh5oauth/authorize',
+      // pathname: '/authorize',
       query: {
         code: Code,
         account: UserType === LoginType.Phone ? `${CountryCode}${PhoneNumber}` : Email,
         redirect_uri,
         state,
+        uin: 'explorerOAuth',
       },
     });
   };
