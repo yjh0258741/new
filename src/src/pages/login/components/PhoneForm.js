@@ -185,6 +185,8 @@ export default function PhoneForm({
             <input
               placeholder="6位数字验证码"
               autoComplete="off"
+              type="tel"
+              maxLength={6}
               style={{
                 marginRight: '200rpx',
               }}
