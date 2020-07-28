@@ -8,10 +8,6 @@ const iconMap = {
   danger: '//main.qcloudimg.com/raw/61c12548fb47b74064acecced7d5c59f/icon-danger-white.svg',
   loading: '//main.qcloudimg.com/raw/1b5be09b703b5e17f84428d52d11dd1e/icon-loading.svg',
   success: '//main.qcloudimg.com/raw/237e09660b3bac0bc51c3df426d76af9/icon-success.svg',
-  // info: '/scf/explorerh5oauth/common/icon-info.svg',
-  // danger: '/scf/explorerh5oauth/common/icon-danger-white.svg',
-  // loading: '/scf/explorerh5oauth/common/icon-loading.svg',
-  // success: '/scf/explorerh5oauth/common/icon-success.svg',
   // info: '/common/icon-info.svg',
   // danger: '/common/icon-danger-white.svg',
   // loading: '/common/icon-loading.svg',
@@ -21,10 +17,6 @@ const iconMap = {
 export default function Tips({
   getInner = noop,
 }) {
-  // const animationRef = useRef(Taro.createAnimation({
-  //   duration: 200,
-  //   timingFunction: 'ease',
-  // }));
   const canClickCloseRef = useRef(false);
   const tipsTimerRef = useRef(null);
   const timeoutTimerRef = useRef(null);
@@ -32,10 +24,11 @@ export default function Tips({
   const promiseResolveRef = useRef(null);
   const canBeReplaceRef = useRef(false);
   const delayRejectRef = useRef(null);
-  const [state, setState] = useState({
+  const [status, setStatus] = useState({
     message: '',
     type: 'info', // danger, success
-    hide: true,
+    // hide: true,
+    show: false,
     showMask: false,
     animationData: null,
   });
@@ -56,8 +49,8 @@ export default function Tips({
     noTimeout = false,
   }) => {
     // 与原showModal保持一致，已弹出或appHiding不展示
-    if (!canBeReplaceRef.current && (!state.hide)) return;
-    // if (!canBeReplaceRef.current && (!state.hide || wxlib.system.appHiding)) return;
+    if (!canBeReplaceRef.current && (status.show)) return;
+    // if (!canBeReplaceRef.current && (!status.hide)) return;
 
     canBeReplaceRef.current = canBeReplace;
     canClickCloseRef.current = canClickClose;
@@ -87,14 +80,15 @@ export default function Tips({
     }
 
     const nextState = {
-      ...state,
-      hide: false,
+      ...status,
+      // hide: false,
+      show: true,
       message,
       type,
       showMask: mask,
     };
 
-    setState(nextState);
+    setStatus(nextState);
 
     if (duration) {
       tipsTimerRef.current = setTimeout(() => {
@@ -102,13 +96,10 @@ export default function Tips({
       }, duration);
     }
 
-    // animationRef.current.opacity(1).translateY(0).step();
-
     await delay(0);
 
-    setState({
+    setStatus({
       ...nextState,
-      // animationData: animationRef.current.export(),
     });
 
     // 未设置duration时，无论如何都设置40秒超时，避免showLoading后因为各种奇怪原因没有hide掉
@@ -140,18 +131,16 @@ export default function Tips({
     clearTimeout(tipsTimerRef.current);
     clearTimeout(timeoutTimerRef.current);
 
-    // animationRef.current.opacity(0).translateY('-100%').step();
-
-    setState({
-      ...state,
-      // animationData: animationRef.current.export(),
+    setStatus({
+      ...status,
     });
 
     await delay(200);
 
-    setState({
-      ...state,
-      hide: true,
+    setStatus({
+      ...status,
+      // hide: true,
+      show: false,
       showMask: false,
     });
 
@@ -219,23 +208,23 @@ export default function Tips({
 
   return (
     <>
-      {state.showMask && (
+      {status.showMask && (
         <div
           className="float-mask"
         />
       )}
       <div
-        className={classNames('float-tips', `tips-${state.type}`, {
-          hide: state.hide,
+        className={classNames('float-tips', `tips-${status.type}`, {
+          // hide: status.hide,
+          show: status.show,
         })}
         onClick={onClickTips}
-        // animation={state.animationData}
       >
         <img
-          className={classNames('tips-icon', `icon-${state.type}`)}
-          src={iconMap[state.type]}
+          className={classNames('tips-icon', `icon-${status.type}`)}
+          src={iconMap[status.type]}
         />
-        <span className="tips-message">{state.message}</span>
+        <span className="tips-message">{status.message}</span>
       </div>
     </>
   );

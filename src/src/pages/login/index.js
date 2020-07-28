@@ -8,11 +8,8 @@ import GlobalComponents from '@src/components/GlobalComponents/GlobalComponents'
 import { useGlobalHooks } from '@src/hooks/useGlobalHooks';
 import { useParams } from '@src/hooks/useParams';
 import { getAuthCode } from '@src/models/index';
+import { AccountType, LoginType } from '@src/constants/login';
 
-const LoginType = {
-  Phone: 'phone',
-  Email: 'email',
-};
 
 export default function Login() {
   const {
@@ -21,16 +18,18 @@ export default function Login() {
 
   const { redirect_uri, state } = useParams();
 
-  const [loginType, setLoginType] = useState(LoginType.Phone);
+  const [accountType, setAccountType] = useState(AccountType.Phone);
+  const [loginType, setLoginType] = useState(LoginType.VerificationCode);
 
-  const onToggleLoginType = (type) => {
-    setLoginType(type);
-  };
+  const onToggleAccountType = (type) => setAccountType(type);
+
+  const onToggleLoginType = type => setLoginType(type);
 
   const onSubmit = async ({
     UserType,
     UserName,
-    Password,
+    Password = '',
+    VerificationCode = '',
     CountryCode = '',
     PhoneNumber = '',
     Email = '',
@@ -42,6 +41,7 @@ export default function Login() {
       CountryCode,
       PhoneNumber,
       Email,
+      VerificationCode,
     });
 
     if (!Code) {
@@ -53,7 +53,7 @@ export default function Login() {
       // pathname: '/authorize',
       query: {
         code: Code,
-        account: UserType === LoginType.Phone ? `${CountryCode}${PhoneNumber}` : Email,
+        account: UserType === AccountType.Phone ? `${CountryCode}${PhoneNumber}` : Email,
         redirect_uri,
         state,
         uin: 'explorerOAuth',
@@ -103,23 +103,28 @@ export default function Login() {
         </div>
 
         <div className="login-input">
-          {loginType === LoginType.Phone ? (
+          {accountType === AccountType.Phone ? (
             <PhoneForm
               components={components}
               onSubmit={onSubmit}
+              loginType={loginType}
             />
           ) : (
             <EmailForm
               components={components}
               onSubmit={onSubmit}
+              loginType={loginType}
             />
           )}
         </div>
 
-        {/* <div className="extra-function">
-          <div className="forget-password"><a href="">忘记密码</a></div>
-          <div className="register">还没有账号？<a href="">注册账号</a></div>
-        </div> */}
+        <div className="extra-function">
+          {loginType === LoginType.VerificationCode ? (
+            <div className="text-link" onClick={() => onToggleLoginType(LoginType.Password)}>账号密码登录</div>
+          ) : (
+            <div className="text-link" onClick={() => onToggleLoginType(LoginType.VerificationCode)}>验证码登录</div>
+          )}
+        </div>
 
         <div className="optional-login">
           <div className="optional-text">
@@ -127,15 +132,9 @@ export default function Login() {
           </div>
 
           <div className="optional-btn">
-            {/* <div className="wechat-login">
-              <img src="//main.qcloudimg.com/raw/6d84c8dc096b69254f799edfb9389d3d/wechat.png" alt="微信"/>
-              <img src="/scf/explorerh5oauth/images/wechat.png" alt="微信"/>
-              <img src="/images/wechat.png" alt="微信"/>
-              <p>微信</p>
-            </div> */}
 
-            {loginType === LoginType.Phone && (
-              <div className="mail-login" onClick={() => onToggleLoginType(LoginType.Email)}>
+            {accountType === AccountType.Phone && (
+              <div className="mail-login" onClick={() => onToggleAccountType(AccountType.Email)}>
                 <img
                   src="//main.qcloudimg.com/raw/5da0639954b88eaaa02a2297a20c03af/mail.png"
                   // src="/scf/explorerh5oauth/images/mail.png"
@@ -146,8 +145,8 @@ export default function Login() {
               </div>
             )}
 
-            {loginType === LoginType.Email && (
-              <div className="phone-login" onClick={() => onToggleLoginType(LoginType.Phone)}>
+            {accountType === AccountType.Email && (
+              <div className="phone-login" onClick={() => onToggleAccountType(AccountType.Phone)}>
                 <img
                   src="//main.qcloudimg.com/raw/a5c0033450080257c3774daa70fec31d/phone.png"
                   // src="/scf/explorerh5oauth/images/phone.png"

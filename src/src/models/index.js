@@ -2,7 +2,8 @@ import { callYunApi } from '@src/lib/request';
 
 export async function getAuthCode({
   UserType,
-  Password,
+  Password = '',
+  VerificationCode = '',
   CountryCode = '',
   PhoneNumber = '',
   Email = '',
@@ -10,6 +11,7 @@ export async function getAuthCode({
   let params = {
     UserType,
     Password,
+    VerificationCode,
   };
 
   if (UserType === 'phone') {
@@ -27,3 +29,25 @@ export async function getAuthCode({
 
   return callYunApi('AppGetUserOAuthCode', params);
 };
+
+export async function sendPhoneVerifyCode({
+  Type = 'login', // register/resetpass/login
+  CountryCode = '86',
+  PhoneNumber,
+}) {
+  return callYunApi('AppSendVerificationCode', {
+    Type,
+    CountryCode,
+    PhoneNumber: String(PhoneNumber),
+  }, { isTokenApi: false });
+}
+
+export async function sendEmailVerifyCode({
+  Type = 'login', // register/resetpass/login
+  Email,
+}) {
+  return callYunApi('AppSendEmailVerificationCode', {
+    Type,
+    Email,
+  }, { isTokenApi: false });
+}

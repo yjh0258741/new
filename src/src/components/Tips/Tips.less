@@ -2,20 +2,25 @@
   position: fixed;
   left: 0;
   right: 0;
-  // top: 0;
-  top: 44px;
+  top: 0;
+  // top: 44px;
   min-height: 44px;
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2);
   z-index: 2000;
   padding: 5px 15px;
   box-sizing: border-box;
-  transform: translate(0, -100%);
+  transform: translate(0, -110%);
+  transition: transform ease .3s;
   // opacity: 0;
   display: flex;
   align-items: center;
 
   &.hide {
     display: none;
+  }
+
+  &.show {
+    transform: translate(0, 0);
   }
 
   &.tips-danger {

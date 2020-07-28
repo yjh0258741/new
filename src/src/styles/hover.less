@@ -3,11 +3,11 @@
  * view 上的点击态的类(hover-class)统一叫做: .button-hover，与button默认值统一
  */
 
-view.need-hover, button {
+div.need-hover, button {
 	position: relative;
 }
 
-view.need-hover.hover:not(.disabled)::before,
+div.need-hover.hover:not(.disabled)::before,
 button.button-hover:not(.disabled):not(disabled)::before {
 	content: ' ';
 	position: absolute;
