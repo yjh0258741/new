@@ -28,7 +28,7 @@ export async function getAuthCode({
   }
 
   return callYunApi('AppGetUserOAuthCode', params);
-};
+}
 
 export async function sendPhoneVerifyCode({
   Type = 'login', // register/resetpass/login

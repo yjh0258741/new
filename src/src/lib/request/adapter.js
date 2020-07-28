@@ -2,9 +2,9 @@ import querystring from 'query-string';
 import shortid from '../shortid';
 // import { store } from '../../redux/store';
 // import * as types from '../../redux/ActionTypes';
-import { cutoffLong, delay } from '../utillib';
+import { delay } from '../utillib';
 import { request } from './request';
-import { getQueryUin, reportCgiData } from './utils';
+import { getQueryUin } from './utils';
 
 export const callYunApi = async (Action, { AccessToken, ...payload } = {}, {
   isTokenApi = false,
@@ -29,12 +29,13 @@ export const callYunApi = async (Action, { AccessToken, ...payload } = {}, {
     };
 
     // 添加公共参数
-    payload = Object.assign({}, payload, {
+    payload = {
+      ...payload,
       Action,
       Platform: 'weapp',
       RequestId: reqId,
       // AccessToken,
-    });
+    };
 
     let url = 'https://iot.cloud.tencent.com/api/studioapp/';
 
@@ -83,13 +84,13 @@ export const callYunApi = async (Action, { AccessToken, ...payload } = {}, {
     if (code) {
       if (data) {
         if (data.Error) {
-          if ((data.Error.Code || '').indexOf('InvalidAccessToken') > -1) {
-            store.dispatch({ type: types.LOG_OUT });
+          // if ((data.Error.Code || '').indexOf('InvalidAccessToken') > -1) {
+          //   store.dispatch({ type: types.LOG_OUT });
 
-            await delay(0);
+          //   await delay(0);
 
-            throw { code: 'userNeedLogin', msg: '登录态已失效，请重新登录' };
-          }
+          //   throw { code: 'userNeedLogin', msg: '登录态已失效，请重新登录' };
+          // }
 
           throw { code: data.Error.Code, msg: data.Error.Message, reqId: data.RequestId };
         }
@@ -117,7 +118,7 @@ export const callYunApi = async (Action, { AccessToken, ...payload } = {}, {
   }
 };
 
-export const reportInsight = data => request({
+export const reportInsight = (data) => request({
   url: 'https://iot.cloud.tencent.com/insight/event',
   data,
   method: 'POST',

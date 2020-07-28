@@ -14,6 +14,7 @@ export default function BtnGroup({
   fixedBottom = false,
 }) {
   if (!buttons || !buttons.length) {
+    // eslint-disable-next-line react/self-closing-comp
     return <div></div>;
   }
 
@@ -32,15 +33,13 @@ export default function BtnGroup({
     >
       {buttons.map((item, index) => (
         <div
+          role="button"
           key={index}
           disabled={item.disabled}
           className={classNames('btn need-hover',
             item.className,
             item.type ? `btn-${item.type}` : '',
             { disabled: item.disabled })}
-          // hoverStartTime="20"
-          // hoverStayTime="70"
-          // hoverClass="hover"
           // formType={item.disabled ? '' : item.formType}
           onClick={item.disabled ? noop : (e) => {
             if (typeof onClick === 'function') {
@@ -55,6 +54,7 @@ export default function BtnGroup({
             <img
               src={item.icon}
               className="btn-icon"
+              alt=""
             />
           )} {item.btnText}
         </div>

@@ -5,7 +5,10 @@ import { useParams } from '@src/hooks/useParams';
 import querystring from 'query-string';
 
 export default function Authorize() {
-  const { code, account, redirect_uri, state } = useParams();
+  const {
+    // eslint-disable-next-line camelcase
+    code, account, redirect_uri, state,
+  } = useParams();
 
   return (
     <div className="authorize">
@@ -13,6 +16,8 @@ export default function Authorize() {
         <title>腾讯连连</title>
         <link rel="icon" href="/favicon.ico" />
         <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+        {/* eslint-disable react/self-closing-comp */
+          /* eslint-disable react/no-danger */}
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -79,5 +84,5 @@ export default function Authorize() {
         <div className="hint-text text-weak">授权后，您可随时取消授权</div>
       </main>
     </div>
-  )
-};
+  );
+}

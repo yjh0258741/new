@@ -20,10 +20,34 @@ export default function PhoneForm({
     countdownLeft: 0,
   });
 
+  const [state, {
+    onFieldChange,
+    validate,
+    doSubmit,
+    updateFormConfig,
+    updateFieldStatus,
+    updateFormData,
+    checkFormChanged,
+  }] = useFormControl({
+    async onSubmit(formData) {
+      try {
+        await onSubmit({
+          UserType: 'phone',
+          CountryCode: formData.areaCode,
+          PhoneNumber: formData.phoneNumber,
+          Password: formData.password,
+          VerificationCode: formData.verifyCode,
+        });
+      } catch (err) {
+        components.tips.showError(err);
+      }
+    },
+  });
+
   const startCountdown = () => {
     countDown(
       Date.now() + (60 * 1000),
-      timeLeft => setCountdownInfo({ ...countdownInfo, countdownLeft: Math.floor(timeLeft / 1000) }),
+      (timeLeft) => setCountdownInfo({ ...countdownInfo, countdownLeft: Math.floor(timeLeft / 1000) }),
       () => setCountdownInfo({ ...countdownInfo, countdownLeft: 0 }),
     );
   };
@@ -60,31 +84,6 @@ export default function PhoneForm({
     }
   };
 
-
-  const [state, {
-    onFieldChange,
-    validate,
-    doSubmit,
-    updateFormConfig,
-    updateFieldStatus,
-    updateFormData,
-    checkFormChanged,
-  }] = useFormControl({
-    async onSubmit(formData) {
-      try {
-        await onSubmit({
-          UserType: 'phone',
-          CountryCode: formData.areaCode,
-          PhoneNumber: formData.phoneNumber,
-          Password: formData.password,
-          VerificationCode: formData.verifyCode,
-        });
-      } catch (err) {
-        components.tips.showError(err);
-      }
-    },
-  });
-
   useEffect(() => {
     if (state.fieldStatus) {
       Object.keys(state.fieldStatus).some((name) => {
@@ -118,7 +117,7 @@ export default function PhoneForm({
         value: '',
         rules: [
           { required: true, message: '请填写手机验证码' },
-          { validate: v => /^[0-9]{6}$/.test(v), message: '请填写6位数字验证码' },
+          { validate: (v) => /^[0-9]{6}$/.test(v), message: '请填写6位数字验证码' },
         ],
       });
     }
@@ -149,13 +148,13 @@ export default function PhoneForm({
             name="areaCode"
             id="areaCode"
             value={state.formData.areaCode}
-            onChange={e => onFieldChange({
+            onChange={(e) => onFieldChange({
               index: 0,
               name: 'areaCode',
               value: e.target.value,
             })}
           >
-            {countryCodeList.map(item => (
+            {countryCodeList.map((item) => (
               <option value={item.value} key={item.text}>{item.text}</option>
             ))}
           </select>
@@ -170,7 +169,7 @@ export default function PhoneForm({
             autoComplete="off"
             type="tel"
             // value={state.formData.phoneNumber}
-            onChange={e => onFieldChange({
+            onChange={(e) => onFieldChange({
               index: 1,
               name: 'phoneNumber',
               value: e.target.value,
@@ -191,13 +190,14 @@ export default function PhoneForm({
               }}
               placeholderclass="form-placeholder"
               // value={state.formData.verifyCode}
-              onChange={e => onFieldChange({
+              onChange={(e) => onFieldChange({
                 index: 2,
                 name: 'verifyCode',
                 value: e.target.value,
               })}
             />
             <div
+              role="button"
               className={classNames('text-link need-hover', {
                 'text-muted': countdownInfo.sending || countdownInfo.countdownLeft,
               })}
@@ -230,7 +230,7 @@ export default function PhoneForm({
               autoComplete="off"
               type="password"
               // value={state.formData.password}
-              onChange={e => onFieldChange({
+              onChange={(e) => onFieldChange({
                 index: 2,
                 name: 'password',
                 value: e.target.value,
@@ -254,4 +254,4 @@ export default function PhoneForm({
       />
     </>
   );
-};
+}

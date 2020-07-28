@@ -10,4 +10,3 @@ export const getQueryUin = () => {
 
   // return uin;
 };
-

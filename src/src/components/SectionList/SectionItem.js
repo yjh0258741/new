@@ -21,6 +21,7 @@ export default function SectionItem({
 
   return (
     <div
+      role="textbox"
       className={classNames('section-item', {
         'need-hover': needHover,
         'border-bottom': !hideBorderBottom,
@@ -44,6 +45,7 @@ export default function SectionItem({
             <img
               className="item-label-icon"
               src={labelIcon}
+              alt=""
             />
           )}
 
@@ -69,4 +71,3 @@ export default function SectionItem({
     </div>
   );
 }
-

@@ -1,4 +1,6 @@
-import React, { useState, useRef, useReducer, useEffect } from 'react';
+import React, {
+  useState, useRef, useReducer, useEffect,
+} from 'react';
 import classNames from 'classnames';
 import './Tips.less';
 import { delay, noop, getErrorMsg } from '@src/lib/utillib';
@@ -33,6 +35,33 @@ export default function Tips({
     animationData: null,
   });
   const hideFnRef = useRef(null);
+
+  const hide = async () => {
+    if (delayRejectRef.current) {
+      delayRejectRef.current();
+    }
+    clearTimeout(tipsTimerRef.current);
+    clearTimeout(timeoutTimerRef.current);
+
+    setStatus({
+      ...status,
+    });
+
+    await delay(200);
+
+    setStatus({
+      ...status,
+      // hide: true,
+      show: false,
+      showMask: false,
+    });
+
+    if (tipsPromiseRef.current && promiseResolveRef.current) {
+      promiseResolveRef.current();
+      tipsPromiseRef.current = null;
+      promiseResolveRef.current = null;
+    }
+  };
 
   hideFnRef.current = () => {
     hide();
@@ -124,55 +153,26 @@ export default function Tips({
     }
   };
 
-  const hide = async () => {
-    if (delayRejectRef.current) {
-      delayRejectRef.current();
-    }
-    clearTimeout(tipsTimerRef.current);
-    clearTimeout(timeoutTimerRef.current);
-
-    setStatus({
-      ...status,
-    });
-
-    await delay(200);
-
-    setStatus({
-      ...status,
-      // hide: true,
-      show: false,
-      showMask: false,
-    });
-
-    if (tipsPromiseRef.current && promiseResolveRef.current) {
-      promiseResolveRef.current();
-      tipsPromiseRef.current = null;
-      promiseResolveRef.current = null;
-    }
-  };
-
   /**
    * 新增的轻量提示，行为尽量和原notice模块一致
    */
-  const showError = async (err /* or message */, { defaultMsg, mask = true, duration = 3000, ...opts } = {}) => {
+  const showError = async (err /* or message */, {
+    defaultMsg, mask = true, duration = 3000, ...opts
+  } = {}) => {
     const errMsg = getErrorMsg(err, { defaultMsg, ...opts });
 
     if (errMsg) {
-      return show(errMsg, { type: 'danger', mask, duration, ...opts });
+      return show(errMsg, {
+        type: 'danger', mask, duration, ...opts,
+      });
     }
   };
 
-  const showTips = (message, type = 'info', { duration = 3000, ...opts } = {}) => {
-    return show(message, { type, duration, ...opts });
-  };
+  const showTips = (message, type = 'info', { duration = 3000, ...opts } = {}) => show(message, { type, duration, ...opts });
 
-  const showInfo = (message, opts = {}) => {
-    return show(message, { type: 'info', ...opts });
-  };
+  const showInfo = (message, opts = {}) => show(message, { type: 'info', ...opts });
 
-  const showSuccess = (message, { mask = true, ...opts } = {}) => {
-    return show(message, { type: 'success', mask, ...opts });
-  };
+  const showSuccess = (message, { mask = true, ...opts } = {}) => show(message, { type: 'success', mask, ...opts });
 
   const showLoading = (message = '加载中…', { mask = true, noTimeout = false, ...opts } = {}) => {
     if (!message.endsWith('…')) {
@@ -191,9 +191,7 @@ export default function Tips({
     });
   };
 
-  const hideLoading = () => {
-    return hide();
-  };
+  const hideLoading = () => hide();
 
   getInner({
     show,
@@ -214,6 +212,7 @@ export default function Tips({
         />
       )}
       <div
+        role="button"
         className={classNames('float-tips', `tips-${status.type}`, {
           // hide: status.hide,
           show: status.show,
@@ -223,6 +222,7 @@ export default function Tips({
         <img
           className={classNames('tips-icon', `icon-${status.type}`)}
           src={iconMap[status.type]}
+          alt=""
         />
         <span className="tips-message">{status.message}</span>
       </div>

@@ -14,26 +14,7 @@ export default function LoadingBar({
   const [complete, setComplete] = useState(false);
   const getNextPercentRef = useRef(null);
 
-  getNextPercentRef.current = () => {
-    return LoadingBar.getNextPercent(percent);
-  };
-
-  const start = () => {
-    if (!complete) {
-      clearInterval(loadingBarTimerRef.current);
-      loadingBarTimerRef.current = setInterval(() => {
-        const nextPercent = getNextPercentRef.current();
-        set(nextPercent);
-      }, 250);
-
-      clearTimeout(loadingBarTimeoutRef.current);
-      // 20秒timeout
-      loadingBarTimeoutRef.current = setTimeout(() => {
-        clearInterval(loadingBarTimerRef.current);
-        completeLoading(true);
-      }, 200 * 1000);
-    }
-  };
+  getNextPercentRef.current = () => LoadingBar.getNextPercent(percent);
 
   const set = async (percent) => {
     if (typeof percent === 'undefined') {
@@ -53,6 +34,13 @@ export default function LoadingBar({
     }
   };
 
+  const reset = async () => {
+    clearInterval(loadingBarTimerRef.current);
+    setPercent(0);
+    await delay(250); // 等待动画
+    setComplete(false);
+  };
+
   const completeLoading = async (autoReset = false) => {
     if (!complete) {
       await set(100);
@@ -63,11 +51,21 @@ export default function LoadingBar({
     }
   };
 
-  const reset = async () => {
-    clearInterval(loadingBarTimerRef.current);
-    setPercent(0);
-    await delay(250); // 等待动画
-    setComplete(false);
+  const start = () => {
+    if (!complete) {
+      clearInterval(loadingBarTimerRef.current);
+      loadingBarTimerRef.current = setInterval(() => {
+        const nextPercent = getNextPercentRef.current();
+        set(nextPercent);
+      }, 250);
+
+      clearTimeout(loadingBarTimeoutRef.current);
+      // 20秒timeout
+      loadingBarTimeoutRef.current = setTimeout(() => {
+        clearInterval(loadingBarTimerRef.current);
+        completeLoading(true);
+      }, 200 * 1000);
+    }
   };
 
   getInner({

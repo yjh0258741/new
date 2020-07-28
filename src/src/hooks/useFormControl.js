@@ -1,6 +1,8 @@
 import React, { useState, useReducer, useRef } from 'react';
 import { isNumeric, noop, validateFormField } from '@src/lib/utillib';
+
 const _ = require('lodash/core');
+
 const { isEqual } = _;
 
 const validateField = ({ formData, fieldConfig }) => {
@@ -75,7 +77,7 @@ function initForm(formConfig, initialData, opts = {}) {
     let required = false;
 
     if (item.rules && item.rules.length) {
-      required = item.rules.find(rule => rule.required);
+      required = item.rules.find((rule) => rule.required);
     }
 
     let align = item.align;
@@ -133,7 +135,7 @@ function initForm(formConfig, initialData, opts = {}) {
       // validating: false,
       error: false,
       message: item.message || '',
-    }
+    };
   });
 
   return data;
@@ -152,7 +154,9 @@ function reducer(state, action) {
       // 2. validate value
       // 3. 更新 fieldStatus
       case 'change': {
-        const { index, name, value, fieldItemStatus, fieldStatus: _fieldStatus } = payload;
+        const {
+          index, name, value, fieldItemStatus, fieldStatus: _fieldStatus,
+        } = payload;
 
         const nextState = {
           ...state,
@@ -195,7 +199,10 @@ function reducer(state, action) {
       case 'updateFormData': {
         const { formData: date2update, validateImmediate, resetTouch } = payload;
 
-        const nextFormData = Object.assign({}, formData, date2update);
+        const nextFormData = {
+          ...formData,
+          ...date2update,
+        };
         const nextFieldStatus = { ...fieldStatus };
 
         formConfig.forEach((fieldConfig) => {
@@ -230,9 +237,12 @@ function reducer(state, action) {
           ...state,
           fieldStatus: {
             ...fieldStatus,
-            [name]: Object.assign({}, fieldStatus[name], nextFieldStatus),
+            [name]: {
+              ...fieldStatus[name],
+              ...nextFieldStatus,
+            },
           },
-        }
+        };
       }
       default:
         console.warn('Dispatch unknown action!', type);
@@ -365,7 +375,7 @@ export const useFormControl = (opts) => {
           },
         });
       },
-      checkFormChanged: initialFormData => !isEqual(initialFormData, state.formData),
+      checkFormChanged: (initialFormData) => !isEqual(initialFormData, state.formData),
     },
   ];
 };

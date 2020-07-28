@@ -2,20 +2,20 @@ import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
 import Router from 'next/router';
 import './index.less';
-import PhoneForm from './components/PhoneForm';
-import EmailForm from './components/EmailForm';
 import GlobalComponents from '@src/components/GlobalComponents/GlobalComponents';
 import { useGlobalHooks } from '@src/hooks/useGlobalHooks';
 import { useParams } from '@src/hooks/useParams';
 import { getAuthCode } from '@src/models/index';
 import { AccountType, LoginType } from '@src/constants/login';
-
+import PhoneForm from './components/PhoneForm';
+import EmailForm from './components/EmailForm';
 
 export default function Login() {
   const {
     globalComponents: [components, { getLoadingBar, getTips }],
   } = useGlobalHooks();
 
+  // eslint-disable-next-line camelcase
   const { redirect_uri, state } = useParams();
 
   const [accountType, setAccountType] = useState(AccountType.Phone);
@@ -23,7 +23,7 @@ export default function Login() {
 
   const onToggleAccountType = (type) => setAccountType(type);
 
-  const onToggleLoginType = type => setLoginType(type);
+  const onToggleLoginType = (type) => setLoginType(type);
 
   const onSubmit = async ({
     UserType,
@@ -67,6 +67,8 @@ export default function Login() {
         <title>腾讯连连</title>
         <link rel="icon" href="/favicon.ico" />
         <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+        {/* eslint-disable react/self-closing-comp */
+          /* eslint-disable react/no-danger */}
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -120,9 +122,21 @@ export default function Login() {
 
         <div className="extra-function">
           {loginType === LoginType.VerificationCode ? (
-            <div className="text-link" onClick={() => onToggleLoginType(LoginType.Password)}>账号密码登录</div>
+            <div
+              className="text-link"
+              onClick={() => onToggleLoginType(LoginType.Password)}
+              role="link"
+            >
+              账号密码登录
+            </div>
           ) : (
-            <div className="text-link" onClick={() => onToggleLoginType(LoginType.VerificationCode)}>验证码登录</div>
+            <div
+              className="text-link"
+              onClick={() => onToggleLoginType(LoginType.VerificationCode)}
+              role="link"
+            >
+              验证码登录
+            </div>
           )}
         </div>
 
@@ -134,7 +148,11 @@ export default function Login() {
           <div className="optional-btn">
 
             {accountType === AccountType.Phone && (
-              <div className="mail-login" onClick={() => onToggleAccountType(AccountType.Email)}>
+              <div
+                className="mail-login"
+                onClick={() => onToggleAccountType(AccountType.Email)}
+                role="button"
+              >
                 <img
                   src="//main.qcloudimg.com/raw/5da0639954b88eaaa02a2297a20c03af/mail.png"
                   // src="/scf/explorerh5oauth/images/mail.png"
@@ -146,7 +164,11 @@ export default function Login() {
             )}
 
             {accountType === AccountType.Email && (
-              <div className="phone-login" onClick={() => onToggleAccountType(AccountType.Phone)}>
+              <div
+                className="phone-login"
+                onClick={() => onToggleAccountType(AccountType.Phone)}
+                role="button"
+              >
                 <img
                   src="//main.qcloudimg.com/raw/a5c0033450080257c3774daa70fec31d/phone.png"
                   // src="/scf/explorerh5oauth/images/phone.png"
@@ -171,5 +193,5 @@ export default function Login() {
         getLoadingBar={getLoadingBar}
       />
     </div>
-  )
+  );
 }
