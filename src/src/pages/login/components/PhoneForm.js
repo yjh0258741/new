@@ -5,7 +5,7 @@ import { useFormControl } from '@src/hooks/useFormControl';
 import { useCountryCodePicker } from '@src/hooks/useCountryCodePicker';
 import { isNumber, countDown } from '@src/lib/utillib';
 import BtnGroup from '@src/components/BtnGroup/BtnGroup';
-import { LoginType } from '@src/constants/login';
+import { LoginType, UserNotExistTip } from '@src/constants/login';
 import { sendPhoneVerifyCode } from '@src/models';
 import classNames from 'classnames';
 
@@ -77,7 +77,7 @@ export default function PhoneForm({
       });
 
       if (err.code === 'InvalidParameterValue.ErrorUserNotExists') {
-        components.tips.showInfo('账号未注册，请到腾讯连连完成注册后再尝试登陆');
+        components.tips.showInfo(UserNotExistTip);
       } else {
         components.tips.showError(err);
       }

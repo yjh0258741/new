@@ -5,7 +5,7 @@ import { useFormControl } from '@src/hooks/useFormControl';
 import { isNumber, isMail, countDown } from '@src/lib/utillib';
 import BtnGroup from '@src/components/BtnGroup/BtnGroup';
 import { sendEmailVerifyCode } from '@src/models';
-import { LoginType } from '@src/constants/login';
+import { LoginType, UserNotExistTip } from '@src/constants/login';
 import classNames from 'classnames';
 
 export default function EmailForm({
@@ -75,7 +75,7 @@ export default function EmailForm({
       });
 
       if (err.code === 'InvalidParameterValue.ErrorUserNotExists') {
-        components.tips.showInfo('账号未注册，请到腾讯连连完成注册后再尝试登陆');
+        components.tips.showInfo(UserNotExistTip);
       } else {
         components.tips.showError(err);
       }
