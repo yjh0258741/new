@@ -139,7 +139,7 @@ export default function EmailForm({
           <input
             placeholder="请输入邮箱"
             autoComplete="off"
-            type="tel"
+            type="email"
             // value={state.formData.email}
             onChange={(e) => onFieldChange({
               index: 0,
