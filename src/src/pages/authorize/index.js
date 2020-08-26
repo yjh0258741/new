@@ -54,11 +54,11 @@ export default function Authorize() {
       </header>
 
       <main>
-        <img src="//main.qcloudimg.com/raw/c23f01343fcdb4a5e945b896e1874dce/logo.png" alt="腾讯云小微" className="app-logo"/>
-        {/* <img src="/scf/explorerh5oauth/images/logo.png" alt="腾讯云小微" className="app-logo"/> */}
-        {/* <img src="/images/logo.png" alt="腾讯云小微" className="app-logo"/> */}
+        <img src="//main.qcloudimg.com/raw/c23f01343fcdb4a5e945b896e1874dce/logo.png" alt="腾讯连连" className="app-logo"/>
+        {/* <img src="/scf/explorerh5oauth/images/logo.png" alt="腾讯连连" className="app-logo"/> */}
+        {/* <img src="/images/logo.png" alt="腾讯连连" className="app-logo"/> */}
 
-        <div className="app-name">腾讯云小微</div>
+        <div className="app-name">腾讯连连</div>
 
         <div className="description">将会：访问你的账号信息；访问你的设备控制权</div>
 
