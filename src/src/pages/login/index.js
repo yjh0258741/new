@@ -6,7 +6,9 @@ import GlobalComponents from '@src/components/GlobalComponents/GlobalComponents'
 import { useGlobalHooks } from '@src/hooks/useGlobalHooks';
 import { useParams } from '@src/hooks/useParams';
 import { getAuthCode } from '@src/models/index';
-import { AccountType, LoginType } from '@src/constants/login';
+import { AccountType, LoginType, LanguageMap } from '@src/constants/login';
+import { PageLanguage } from '@src/constants/common';
+import classNames from 'classnames';
 import PhoneForm from './components/PhoneForm';
 import EmailForm from './components/EmailForm';
 
@@ -16,10 +18,23 @@ export default function Login() {
   } = useGlobalHooks();
 
   // eslint-disable-next-line camelcase
-  const { redirect_uri, state } = useParams();
+  const { redirect_uri, state, client_id, uin } = useParams();
 
+  const [language, setLanguage] = useState(PageLanguage.Chinese);
   const [accountType, setAccountType] = useState(AccountType.Phone);
   const [loginType, setLoginType] = useState(LoginType.VerificationCode);
+
+  useEffect(() => {
+    if (!client_id) {
+      return;
+    }
+
+    if (client_id.indexOf('alexa') !== -1 || client_id.indexOf('google') !== -1) {
+      setLanguage(PageLanguage.English);
+    } else {
+      setLanguage(PageLanguage.Chinese);
+    }
+  }, [client_id]);
 
   const onToggleAccountType = (type) => setAccountType(type);
 
@@ -55,8 +70,9 @@ export default function Login() {
         code: Code,
         account: UserType === AccountType.Phone ? `${CountryCode}${PhoneNumber}` : Email,
         redirect_uri,
+        client_id,
         state,
-        uin: 'explorerOAuth',
+        uin: uin || 'explorerOAuth',
       },
     });
   };
@@ -101,19 +117,21 @@ export default function Login() {
           <img src="//main.qcloudimg.com/raw/c23f01343fcdb4a5e945b896e1874dce/logo.png" alt="腾讯连连" className="logo-image"/>
           {/* <img src="/scf/explorerh5oauth/images/logo.png" alt="腾讯连连" className="logo-image"/> */}
           {/* <img src="/images/logo.png" alt="腾讯连连" className="logo-image"/> */}
-          <div className="logo-text">欢迎使用腾讯连连</div>
+          <div className="logo-text">{LanguageMap[language || PageLanguage.Chinese].welcome}</div>
         </div>
 
         <div className="login-input">
           {accountType === AccountType.Phone ? (
             <PhoneForm
               components={components}
+              language={language}
               onSubmit={onSubmit}
               loginType={loginType}
             />
           ) : (
             <EmailForm
               components={components}
+              language={language}
               onSubmit={onSubmit}
               loginType={loginType}
             />
@@ -127,7 +145,7 @@ export default function Login() {
               onClick={() => onToggleLoginType(LoginType.Password)}
               role="link"
             >
-              账号密码登录
+              {LanguageMap[language || PageLanguage.Chinese].pwdLogin}
             </div>
           ) : (
             <div
@@ -135,14 +153,44 @@ export default function Login() {
               onClick={() => onToggleLoginType(LoginType.VerificationCode)}
               role="link"
             >
-              验证码登录
+              {LanguageMap[language || PageLanguage.Chinese].codeLogin}
             </div>
           )}
+
+          <div className="language-setting">
+            <div
+              className={classNames({
+                'text-link': language === PageLanguage.Chinese
+              })}
+              onClick={() => {
+                if (language === PageLanguage.Chinese) {
+                  setLanguage(PageLanguage.English);
+                }
+              }}
+              role="link"
+            >
+              EN
+            </div>
+            <span>/</span>
+            <div
+              className={classNames({
+                'text-link': language === PageLanguage.English
+              })}
+              onClick={() => {
+                if (language === PageLanguage.English) {
+                  setLanguage(PageLanguage.Chinese);
+                }
+              }}
+              role="link"
+            >
+              中文
+            </div>
+          </div>
         </div>
 
         <div className="optional-login">
           <div className="optional-text">
-            <p>其他登录方式</p>
+            <p>{LanguageMap[language || PageLanguage.Chinese].otherLogin}</p>
           </div>
 
           <div className="optional-btn">
@@ -157,9 +205,9 @@ export default function Login() {
                   src="//main.qcloudimg.com/raw/5da0639954b88eaaa02a2297a20c03af/mail.png"
                   // src="/scf/explorerh5oauth/images/mail.png"
                   // src="/images/mail.png"
-                  alt="邮箱"
+                  alt={LanguageMap[language || PageLanguage.Chinese].email}
                 />
-                <p>邮箱</p>
+                <p>{LanguageMap[language || PageLanguage.Chinese].email}</p>
               </div>
             )}
 
@@ -173,9 +221,9 @@ export default function Login() {
                   src="//main.qcloudimg.com/raw/a5c0033450080257c3774daa70fec31d/phone.png"
                   // src="/scf/explorerh5oauth/images/phone.png"
                   // src="/images/phone.png"
-                  alt="手机号"
+                  alt={LanguageMap[language || PageLanguage.Chinese].phone}
                 />
-                <p>手机号</p>
+                <p>{LanguageMap[language || PageLanguage.Chinese].phone}</p>
               </div>
             )}
           </div>

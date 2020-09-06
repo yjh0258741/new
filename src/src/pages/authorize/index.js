@@ -7,7 +7,7 @@ import querystring from 'query-string';
 export default function Authorize() {
   const {
     // eslint-disable-next-line camelcase
-    code, account, redirect_uri, state,
+    code, account, redirect_uri, state, client_id,
   } = useParams();
 
   return (

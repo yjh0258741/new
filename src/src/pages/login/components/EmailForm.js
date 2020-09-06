@@ -5,11 +5,12 @@ import { useFormControl } from '@src/hooks/useFormControl';
 import { isNumber, isMail, countDown } from '@src/lib/utillib';
 import BtnGroup from '@src/components/BtnGroup/BtnGroup';
 import { sendEmailVerifyCode } from '@src/models';
-import { LoginType, UserNotExistTip } from '@src/constants/login';
+import { LoginType, UserNotExistTip, LanguageMap } from '@src/constants/login';
 import classNames from 'classnames';
 
 export default function EmailForm({
   components,
+  language,
   onSubmit,
   loginType,
 }) {
@@ -55,7 +56,7 @@ export default function EmailForm({
       if (countdownInfo.sending || countdownInfo.countdownLeft) return;
 
       if (!(state.formData.email && isMail(state.formData.email))) {
-        throw '请填写正确的邮箱';
+        throw LanguageMap[language || PageLanguage.Chinese].emailErrorTip;
       }
 
       setCountdownInfo({
@@ -75,7 +76,7 @@ export default function EmailForm({
       });
 
       if (err.code === 'InvalidParameterValue.ErrorUserNotExists') {
-        components.tips.showInfo(UserNotExistTip);
+        components.tips.showInfo(UserNotExistTip[language], { duration: 3000 });
       } else {
         components.tips.showError(err);
       }
@@ -99,8 +100,8 @@ export default function EmailForm({
         name: 'email',
         value: '',
         rules: [
-          { required: true, message: '请填写邮箱' },
-          { validate: isMail, message: '请填写正确的邮箱' },
+          { required: true, message: LanguageMap[language || PageLanguage.Chinese].emailHint },
+          { validate: isMail, message: LanguageMap[language || PageLanguage.Chinese].emailErrorTip },
         ],
       },
     ];
@@ -110,8 +111,8 @@ export default function EmailForm({
         name: 'verifyCode',
         value: '',
         rules: [
-          { required: true, message: '请填写邮箱验证码' },
-          { validate: (v) => /^[0-9]{6}$/.test(v), message: '请填写6位数字验证码' },
+          { required: true, message: LanguageMap[language || PageLanguage.Chinese].codeTip },
+          { validate: (v) => /^[0-9]{6}$/.test(v), message: LanguageMap[language || PageLanguage.Chinese].codeErrorTip },
         ],
       });
     }
@@ -121,7 +122,7 @@ export default function EmailForm({
         name: 'password',
         value: '',
         rules: [
-          { required: true, message: '请填写密码' },
+          { required: true, message: LanguageMap[language || PageLanguage.Chinese].pwdHint },
         ],
       });
     }
@@ -133,14 +134,13 @@ export default function EmailForm({
     <>
       <SectionList>
         <SectionItem
-          label="邮箱"
+          label={LanguageMap[language || PageLanguage.Chinese].email}
           textAlign="left"
         >
           <input
-            placeholder="请输入邮箱"
+            placeholder={LanguageMap[language || PageLanguage.Chinese].emailHint}
             autoComplete="off"
             type="email"
-            // value={state.formData.email}
             onChange={(e) => onFieldChange({
               index: 0,
               name: 'email',
@@ -151,11 +151,11 @@ export default function EmailForm({
 
         {loginType === LoginType.VerificationCode && (
           <SectionItem
-            label="验证码"
+            label={LanguageMap[language || PageLanguage.Chinese].code}
             textAlign="left"
           >
             <input
-              placeholder="6位数字验证码"
+              placeholder={LanguageMap[language || PageLanguage.Chinese].codeHint}
               autoComplete="off"
               type="tel"
               maxLength={6}
@@ -163,7 +163,6 @@ export default function EmailForm({
                 marginRight: '200rpx',
               }}
               placeholderclass="form-placeholder"
-              // value={state.formData.verifyCode}
               onChange={(e) => onFieldChange({
                 index: 1,
                 name: 'verifyCode',
@@ -184,11 +183,11 @@ export default function EmailForm({
               onClick={doSendVerifyCode}
             >
               {!countdownInfo.sending && !countdownInfo.countdownLeft ? (
-                <span>获取验证码</span>
+                <span>{LanguageMap[language || PageLanguage.Chinese].getCode}</span>
               ) : countdownInfo.countdownLeft ? (
-                <span>重新发送{countdownInfo.countdownLeft}s</span>
+                <span>{LanguageMap[language || PageLanguage.Chinese].resend}{countdownInfo.countdownLeft}s</span>
               ) : (
-                <span>发送中…</span>
+                <span>{LanguageMap[language || PageLanguage.Chinese].sending}…</span>
               )}
             </div>
           </SectionItem>
@@ -196,14 +195,13 @@ export default function EmailForm({
 
         {loginType === LoginType.Password && (
           <SectionItem
-            label="密码"
+            label={LanguageMap[language || PageLanguage.Chinese].password}
             textAlign="left"
           >
             <input
-              placeholder="请输入密码"
+              placeholder={LanguageMap[language || PageLanguage.Chinese].pwdHint}
               autoComplete="off"
               type="password"
-              // value={state.formData.password}
               onChange={(e) => onFieldChange({
                 index: 1,
                 name: 'password',
@@ -218,7 +216,7 @@ export default function EmailForm({
         containerClass="login-btn"
         buttons={[
           {
-            btnText: '登录',
+            btnText: LanguageMap[language || PageLanguage.Chinese].login,
             type: 'primary',
             onClick: () => {
               doSubmit();

@@ -1,3 +1,8 @@
+export const PageLanguage = {
+  English: 'English',
+  Chinese: 'Chinese',
+};
+
 export const CountryCodeList = [
   {
     EnName: 'Albania',

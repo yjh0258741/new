@@ -5,16 +5,17 @@ import { useFormControl } from '@src/hooks/useFormControl';
 import { useCountryCodePicker } from '@src/hooks/useCountryCodePicker';
 import { isNumber, countDown } from '@src/lib/utillib';
 import BtnGroup from '@src/components/BtnGroup/BtnGroup';
-import { LoginType, UserNotExistTip } from '@src/constants/login';
+import { LoginType, UserNotExistTip, LanguageMap } from '@src/constants/login';
 import { sendPhoneVerifyCode } from '@src/models';
 import classNames from 'classnames';
 
 export default function PhoneForm({
   components,
+  language,
   onSubmit,
   loginType,
 }) {
-  const countryCodeList = useCountryCodePicker();
+  const countryCodeList = useCountryCodePicker({ language });
   const [countdownInfo, setCountdownInfo] = useState({
     sending: false,
     countdownLeft: 0,
@@ -57,7 +58,7 @@ export default function PhoneForm({
       if (countdownInfo.sending || countdownInfo.countdownLeft) return;
 
       if (!(state.formData.phoneNumber && isNumber(state.formData.phoneNumber))) {
-        throw '请填写合法的手机号';
+        throw LanguageMap[language || PageLanguage.Chinese].phoneErrorTip;
       }
 
       setCountdownInfo({
@@ -77,7 +78,7 @@ export default function PhoneForm({
       });
 
       if (err.code === 'InvalidParameterValue.ErrorUserNotExists') {
-        components.tips.showInfo(UserNotExistTip);
+        components.tips.showInfo(UserNotExistTip[language], { duration: 3000 });
       } else {
         components.tips.showError(err);
       }
@@ -105,8 +106,8 @@ export default function PhoneForm({
         name: 'phoneNumber',
         value: '',
         rules: [
-          { required: true, message: '请填写手机号' },
-          { validate: isNumber, message: '请填写合法的手机号' },
+          { required: true, message: LanguageMap[language || PageLanguage.Chinese].phoneHint },
+          { validate: isNumber, message: LanguageMap[language || PageLanguage.Chinese].phoneErrorTip },
         ],
       },
     ];
@@ -116,8 +117,8 @@ export default function PhoneForm({
         name: 'verifyCode',
         value: '',
         rules: [
-          { required: true, message: '请填写手机验证码' },
-          { validate: (v) => /^[0-9]{6}$/.test(v), message: '请填写6位数字验证码' },
+          { required: true, message: LanguageMap[language || PageLanguage.Chinese].codeTip },
+          { validate: (v) => /^[0-9]{6}$/.test(v), message: LanguageMap[language || PageLanguage.Chinese].codeErrorTip },
         ],
       });
     }
@@ -127,7 +128,7 @@ export default function PhoneForm({
         name: 'password',
         value: '',
         rules: [
-          { required: true, message: '请填写密码' },
+          { required: true, message: LanguageMap[language || PageLanguage.Chinese].pwdHint },
         ],
       });
     }
@@ -139,7 +140,7 @@ export default function PhoneForm({
     <>
       <SectionList>
         <SectionItem
-          label="国家/地区"
+          label={LanguageMap[language || PageLanguage.Chinese].region}
           textAlign="left"
           clickable={true}
         >
@@ -161,14 +162,14 @@ export default function PhoneForm({
         </SectionItem>
 
         <SectionItem
-          label="手机号"
+          label={LanguageMap[language || PageLanguage.Chinese].phone}
           textAlign="left"
         >
           <input
-            placeholder="请输入手机号码"
+            style={{ width: '100%' }}
+            placeholder={LanguageMap[language || PageLanguage.Chinese].phoneHint}
             autoComplete="off"
             type="tel"
-            // value={state.formData.phoneNumber}
             onChange={(e) => onFieldChange({
               index: 1,
               name: 'phoneNumber',
@@ -179,11 +180,11 @@ export default function PhoneForm({
 
         {loginType === LoginType.VerificationCode && (
           <SectionItem
-            label="验证码"
+            label={LanguageMap[language || PageLanguage.Chinese].code}
             textAlign="left"
           >
             <input
-              placeholder="6位数字验证码"
+              placeholder={LanguageMap[language || PageLanguage.Chinese].codeHint}
               autoComplete="off"
               type="tel"
               maxLength={6}
@@ -191,7 +192,6 @@ export default function PhoneForm({
                 marginRight: '200rpx',
               }}
               placeholderclass="form-placeholder"
-              // value={state.formData.verifyCode}
               onChange={(e) => onFieldChange({
                 index: 2,
                 name: 'verifyCode',
@@ -212,11 +212,11 @@ export default function PhoneForm({
               onClick={doSendVerifyCode}
             >
               {!countdownInfo.sending && !countdownInfo.countdownLeft ? (
-                <span>获取验证码</span>
+                <span>{LanguageMap[language || PageLanguage.Chinese].getCode}</span>
               ) : countdownInfo.countdownLeft ? (
-                <span>重新发送{countdownInfo.countdownLeft}s</span>
+                <span>{LanguageMap[language || PageLanguage.Chinese].resend}{countdownInfo.countdownLeft}s</span>
               ) : (
-                <span>发送中…</span>
+                <span>{LanguageMap[language || PageLanguage.Chinese].sending}…</span>
               )}
             </div>
           </SectionItem>
@@ -224,14 +224,13 @@ export default function PhoneForm({
 
         {loginType === LoginType.Password && (
           <SectionItem
-            label="密码"
+            label={LanguageMap[language || PageLanguage.Chinese].password}
             textAlign="left"
           >
             <input
-              placeholder="请输入密码"
+              placeholder={LanguageMap[language || PageLanguage.Chinese].pwdHint}
               autoComplete="off"
               type="password"
-              // value={state.formData.password}
               onChange={(e) => onFieldChange({
                 index: 2,
                 name: 'password',
@@ -246,7 +245,7 @@ export default function PhoneForm({
         containerClass="login-btn"
         buttons={[
           {
-            btnText: '登录',
+            btnText: LanguageMap[language || PageLanguage.Chinese].login,
             type: 'primary',
             onClick: () => {
               doSubmit();
