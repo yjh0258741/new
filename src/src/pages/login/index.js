@@ -71,6 +71,7 @@ export default function Login() {
         account: UserType === AccountType.Phone ? `${CountryCode}${PhoneNumber}` : Email,
         redirect_uri,
         client_id,
+        language,
         state,
         uin: uin || 'explorerOAuth',
       },
