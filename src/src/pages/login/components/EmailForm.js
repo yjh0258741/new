@@ -6,6 +6,7 @@ import { isNumber, isMail, countDown } from '@src/lib/utillib';
 import BtnGroup from '@src/components/BtnGroup/BtnGroup';
 import { sendEmailVerifyCode } from '@src/models';
 import { LoginType, UserNotExistTip, LanguageMap } from '@src/constants/login';
+import { PageLanguage } from '@src/constants/common';
 import classNames from 'classnames';
 
 export default function EmailForm({

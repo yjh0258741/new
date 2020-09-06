@@ -7,6 +7,7 @@ import { isNumber, countDown } from '@src/lib/utillib';
 import BtnGroup from '@src/components/BtnGroup/BtnGroup';
 import { LoginType, UserNotExistTip, LanguageMap } from '@src/constants/login';
 import { sendPhoneVerifyCode } from '@src/models';
+import { PageLanguage } from '@src/constants/common';
 import classNames from 'classnames';
 
 export default function PhoneForm({
