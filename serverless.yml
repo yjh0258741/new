@@ -12,7 +12,7 @@ inputs:
   functionName: iot-explorer-h5-oauth
   namespace: IOT_dev
   serviceName: iotexplorer_h5oauth_dev
-  serviceId: service-nshnzppg
+  serviceId: service-0hnzrq1y
   runtime: Nodejs10.15
   functionConf:
     timeout: 30
