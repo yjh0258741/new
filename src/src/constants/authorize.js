@@ -17,6 +17,6 @@ export const LanguageMap = {
 
 export const AlexaLogo = '//main.qcloudimg.com/raw/51cee689cba0d335cfaed39d9f1e9042/amazon_alexa_stacked_logo_RGB.png';
 export const GoogleLogo = '';
-export const YunxiaoweiLogo = '';
+export const YunxiaoweiLogo = '//main.qcloudimg.com/raw/e1b9837af97376fbef3ff81f313a1de3/yunxiaowei.png';
 export const XiaoduLogo = '';
 export const LianlianLogo = '//main.qcloudimg.com/raw/72ffeb95e6df2c95ff6cd4ce76f3458c/lianlian-logo.png';
