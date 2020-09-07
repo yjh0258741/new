@@ -1,0 +1,6 @@
+{
+  "scripts": {
+    "publish-dev": "sh ./serverless/release.sh dev",
+    "publish-release": "sh ./serverless/release.sh release"
+  }
+}
