@@ -5,6 +5,7 @@ import shortid from '../shortid';
 import { delay } from '../utillib';
 import { request } from './request';
 import { getQueryUin } from './utils';
+import { userRequestInfo } from '../../pages/login/index';
 
 export const callYunApi = async (Action, { AccessToken, ...payload } = {}, {
   isTokenApi = false,
@@ -25,7 +26,7 @@ export const callYunApi = async (Action, { AccessToken, ...payload } = {}, {
     // }
 
     const query = {
-      uin: 'explorerOAuth',
+      uin: userRequestInfo.uin || 'explorerOAuth',
     };
 
     // 添加公共参数
@@ -34,7 +35,7 @@ export const callYunApi = async (Action, { AccessToken, ...payload } = {}, {
       Action,
       Platform: 'weapp',
       RequestId: reqId,
-      // AccessToken,
+      RegionId: userRequestInfo.regionId || 1,
     };
 
     let url = 'https://iot.cloud.tencent.com/api/studioapp/';

@@ -12,6 +12,11 @@ import classNames from 'classnames';
 import PhoneForm from './components/PhoneForm';
 import EmailForm from './components/EmailForm';
 
+export const userRequestInfo = {
+  regionId: 1,
+  uin: 'explorerOAuth',
+};
+
 export default function Login() {
   const {
     globalComponents: [components, { getLoadingBar, getTips }],
@@ -19,6 +24,7 @@ export default function Login() {
 
   // eslint-disable-next-line camelcase
   const { redirect_uri, state, client_id, uin } = useParams();
+  userRequestInfo.uin = uin;
 
   const [language, setLanguage] = useState(PageLanguage.Chinese);
   const [accountType, setAccountType] = useState(AccountType.Phone);
@@ -31,6 +37,9 @@ export default function Login() {
 
     if (client_id.indexOf('alexa') !== -1 || client_id.indexOf('google') !== -1) {
       setLanguage(PageLanguage.English);
+      Object.assign(userRequestInfo, {
+        regionId: 22,
+      });
     } else {
       setLanguage(PageLanguage.Chinese);
     }
