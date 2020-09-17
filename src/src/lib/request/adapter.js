@@ -33,7 +33,8 @@ export const callYunApi = async (Action, { AccessToken, ...payload } = {}, {
     payload = {
       ...payload,
       Action,
-      Platform: 'weapp',
+      Platform: 'ios', // 走公版IOS的逻辑算
+      AppID: 'com.tencent.iot.explorer.link',
       RequestId: reqId,
       RegionId: userRequestInfo.regionId || 1,
     };
