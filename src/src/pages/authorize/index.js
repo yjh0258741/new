@@ -77,7 +77,7 @@ export default function Authorize() {
 
         {/* <div className="app-name">腾讯连连</div> */}
 
-        <div className="description">{(client_id && client_id.indexOf('google') !== -1) ? 'Google ' : ''}{LanguageMap[language || PageLanguage.Chinese].accessInfo}</div>
+        <div className="description">{(client_id && client_id.indexOf('google') !== -1) ? 'Google will access control of your devices.' : (LanguageMap[language || PageLanguage.Chinese].accessInfo)}</div>
 
         <BtnGroup
           marginTop={30}
