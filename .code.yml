@@ -1,0 +1,10 @@
+source:
+  third_party_source:
+    filepath_regex: [
+      ".*/src/src/pages/authorize/index.js",
+      ".*/src/src/pages/login/index.js",
+      ".*/src/src/hooks/useFormControl.js",
+      ".*/src/src/hooks/useFormControl.js",
+      ".*/src/src/pages/login/components/EmailForm.js",
+      ".*/src/src/pages/login/components/PhoneForm.js"
+    ]

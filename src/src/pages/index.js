@@ -9,8 +9,6 @@ import { useFormControl } from '@src/hooks/useFormControl';
 import { isNumber } from '@src/lib/utillib';
 
 export default function Home() {
-
-
   return (
     <div className="container">
       <Head>
