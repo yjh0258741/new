@@ -31,5 +31,5 @@ export default function Home() {
         <p>腾讯云 版权所有</p>
       </footer>
     </div>
-  )
+  );
 }

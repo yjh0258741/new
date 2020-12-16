@@ -1,5 +1,5 @@
 const withLess = require('@zeit/next-less');
-const isProd = process.env.NODE_ENV === 'production'
+const isProd = process.env.NODE_ENV === 'production';
 
 module.exports = withLess({
   /* config options here */
