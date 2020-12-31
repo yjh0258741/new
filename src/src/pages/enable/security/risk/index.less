@@ -5,6 +5,7 @@
     .top{
         height:70.9333vw;
         background-image: linear-gradient(180deg, #3385FF 0%, #0C6EFF 100%);
+        border:1px solid transparent;
         .deviceStatus{
             height: 4.2667vw;
             padding-top: 4.1333vw;
@@ -12,18 +13,19 @@
             color: #fff;
             margin-left: 76.5333vw;
         }
+
         .score{
             height: 42.6667vw;
             width: 42.6667vw;
             border: 6px solid #fff;
             border-radius: 100%;
             margin: auto;
-            margin-top: 0.5333vw;
+            margin-top: 6.1333vw;
             position: relative;
             .scoreNumber{
                 position: absolute;
                 top: 13.3333vw;
-                left: 9.3333vw;
+                right: 16.4667vw;
                 font-family: PingFangSC-Regular;
                 font-size: 10.6667vw;
                 color: #FFFFFF;
@@ -94,36 +96,42 @@
             color: #15161A;
         }
         .warnMsg{
-            height: 32vw;
             width: 100%;
             background:#fff ;
-            padding-left: 4.2667vw;
-            padding-top: 4.2667vw;
+            padding: 4.2667vw;
             padding-bottom: 2.6667vw;
             .earlyWarn{
                 display: flex;
                 font-size: 3.7333vw;
-                .warnReason{
-                    width: 23.3333vw;
-                    height: 5.8667vw;
+                justify-content: space-between;
+                .warntext{
+                    flex: 1;
+                    display: flex;
                     overflow: hidden;
-                    color: #15161A;
-                    letter-spacing: 1.17px;
-                }
-                .warnAmount{
-                    margin-left: 4.2667vw;
-                    width: 11.2vw;
-                    height: 5.3333vw;
-                    border-radius: 5.3333vw;
-                    background: #FF584C;
-                    text-align: center;
-                    font-size: 2.6667vw;
-                    line-height: 5.3333vw;
-                    color: #fff;
+                    .warnReason{
+                        height: 5.8667vw;
+                        overflow: hidden;
+                        color: #15161A;
+                        letter-spacing: 1.17px;
+                        text-overflow:ellipsis;
+                        white-space: nowrap;
+                    }
+                    .warnAmount{
+                        margin-left: 4.2667vw;
+                        width: 11.2vw;
+                        height: 5.3333vw;
+                        border-radius: 5.3333vw;
+                        background: #FF584C;
+                        text-align: center;
+                        font-size: 2.6667vw;
+                        line-height: 5.3333vw;
+                        color: #fff;
+                    }
                 }
                 .warnTime{
-                    margin-left: 17.6vw;
+                    width: 35.0667vw;
                     color: #A1A7B2;
+                    white-space: nowrap;
                 }
             }
             .possibleAccident{
@@ -133,8 +141,11 @@
                 .accidentReason{
                     margin-top: 2.1333vw;
                     color: #6C7078;
-                    height: 5.3333vw;
                     width: 78.1333vw;
+                    display: -webkit-box;
+                    -webkit-box-orient: vertical;
+                    -webkit-line-clamp: 2;
+                    overflow: hidden;
                 }
                 .warnDetail{
                     margin-left:8.5333vw;
@@ -146,13 +157,16 @@
                 padding-top: 3.3333vw;
                 border-top: 0.1333vw solid #E7E8EB;
                 box-sizing: border-box;
-                height: 8.6667vw;
-                margin-right: 4.2667vw;
+                padding-right: 4.2667vw;
+                overflow: hidden;
                 .warnAdvise{
-                    height:5.3333vw;
                     width: 78.1333vw;
                     font-size: 3.7333vw;
                     color: #6C7078;
+                    display: -webkit-box;
+                    -webkit-box-orient: vertical;
+                    -webkit-line-clamp: 2;
+                    overflow: hidden;
 
                 }
             }
