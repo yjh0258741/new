@@ -22,7 +22,7 @@ export default function Home(){
     },[])
    
     return(
-        <div className="details-container">
+        <div className="detailsContainer">
             <Head>
             <title>腾讯连连</title>
             <link rel="icon" href="/favicon.ico" />
@@ -30,38 +30,38 @@ export default function Home(){
             </Head> 
             <main className='top'>
                 <div className='score'>
-                    <div className='score-number'>100</div>
+                    <div className='scoreNumber'>100</div>
                 </div>
                 <div className='evaluate'>恭喜您,安全状况良好</div>
             </main>
             <footer className='reason'>
                 {
-                    scorelist.map((obj)=>{
-                     return   <div className='warn-message'>
-                                <div className='warn-title'>{obj.Name}</div>
-                                <div className='warn-main'>
-                                    <div className='warn-analyse'>
-                                        <div className='analyse-title'>隐患分析</div>
-                                        <div className='analyse-reason'>{obj.Reason}</div>
+                    scorelist.map((obj,item)=>{
+                     return   <div className='warnMessage' key={item}>
+                                <div className='warntitle'>{obj.Name}</div>
+                                <div className='warnMain'>
+                                    <div className='warnAnalyse'>
+                                        <div className='analyseTitle'>隐患分析</div>
+                                        <div className='analyseReason'>{obj.Reason}</div>
                                     </div>
-                                    <div className='warn-advise'>
-                                        <div className='advise-title'>处理建议</div>
-                                        <div className='cope-advise'>{obj.Suggestion}</div>
+                                    <div className='warnAdvise'>
+                                        <div className='adviseTitle'>处理建议</div>
+                                        <div className='copeAdvise'>{obj.Suggestion}</div>
                                     </div>
                                 </div>
                             </div>
                     })
                 }
-                <div className='warn-message'>
-                    <div className='warn-title'>电流过大</div>
-                    <div className='warn-main'>
-                        <div className='warn-analyse'>
-                            <div className='analyse-title'>隐患分析</div>
-                            <div className='analyse-reason'>电流过大会造成火灾隐患</div>
+                <div className='warnMessage'>
+                    <div className='warnTitle'>电流过大</div>
+                    <div className='warnMain'>
+                        <div className='warnAnalyse'>
+                            <div className='analyseTitle'>隐患分析</div>
+                            <div className='analyseReason'>电流过大会造成火灾隐患</div>
                         </div>
-                        <div className='warn-advise'>
-                            <div className='advise-title'>处理建议</div>
-                            <div className='cope-advise'>请立刻停止大功率电器使用</div>
+                        <div className='warnAdvise'>
+                            <div className='adviseTitle'>处理建议</div>
+                            <div className='copeAdvise'>请立刻停止大功率电器使用</div>
                         </div>
                     </div>
                 </div>

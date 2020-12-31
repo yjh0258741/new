@@ -106,7 +106,7 @@ export async function  AppGetInsuranceEvaluation(
   // }, { isTokenApi: false })
   return  {
     RequestId: "f92406b3-5a9a-4fe8-bc43-45e3d794bb68",
-    "Score":100,
+    "Score":79,
     Risks:[{
       "Name":"电流过大",
       "Reason":"电流过大会造成火灾隐患",
