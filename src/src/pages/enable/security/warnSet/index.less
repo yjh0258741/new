@@ -1,0 +1,78 @@
+html{
+    height: 100%;
+    width: 100%;
+    background: #F5F5F5;
+}
+.warnSet{
+    .setSwitch{
+        height: 12.8vw;
+        background: #fff;
+        padding-left: 4.2667vw;
+        padding-right: 4.2667vw;
+        margin-top: 32px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .setTitle{
+            font-size:3.7333vw;
+            line-height: 7.4667vw;
+        }
+    }
+    .shadowOnOff{
+        display: block !important;
+    }
+    .shadow{
+        height: 100%;
+        width: 100%;
+        background: rgba(0, 0,0,.6);
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: none;
+        .shadowTip{
+            height: 47.0667vw;
+            width: 74.6667vw;
+            background: #fff;
+            position: absolute;
+            top: 28vw;
+            left: 50%;
+            transform: translate(-50%);
+            border-radius: 16px;
+            .shadowTitle{
+                text-align: center;
+                font-size: 4.2667vw;
+                color: #15161A;
+                margin: 5.3333vw 0; 
+            }
+            .shadowText{
+                height: 10.6667vw;
+                width: 62.1333vw;
+                text-align: center;
+                margin:0 auto;
+                color: #6C7078;
+                font-size: 3.7333vw;
+                margin-bottom: 5.3333vw;
+            }
+            .shadowSwitch{
+                height: 12.8vw;
+                display: flex;
+                position: relative;
+                .cancel{
+                    color: #6C7078;
+                }
+                .affirm{
+                    color: #0066ff;
+                }
+                .cancel,.affirm{
+                    width: 280px;
+                    height: 96px;
+                    font-size: 4.2667vw;
+                    text-align: center;
+                    line-height: 96px;
+                    border: 1px solid #E7E8EB;
+                    border-bottom: 0;
+                }
+            }
+        }
+    }
+}
