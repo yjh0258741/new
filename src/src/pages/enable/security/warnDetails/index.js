@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import './index.less'
 import {withRouter} from 'next/router'
-import {AppGetInsuranceAlarmDetailList} from '../../../models'
+import {AppGetInsuranceAlarmDetailList} from '../../../../models'
 import React, { useEffect, useState } from 'react';
 import date from '../lib/time';
 

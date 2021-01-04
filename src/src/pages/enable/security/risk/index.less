@@ -3,9 +3,14 @@
     position:relative;
     background: #F5F5F5;
     .top{
-        height:70.9333vw;
         background-image: linear-gradient(180deg, #3385FF 0%, #0C6EFF 100%);
         border:1px solid transparent;
+        box-sizing: border-box;
+        .circularRing{
+            margin-top: 6.1333vw;
+            margin-left: 28.2667vw;
+          
+        }
         .deviceStatus{
             height: 4.2667vw;
             padding-top: 4.1333vw;
@@ -13,38 +18,44 @@
             color: #fff;
             margin-left: 76.5333vw;
         }
-
+        .scoreNumber{
+            position: absolute;
+            top: 22.4vw;
+            right: 44.1333vw;
+            font-family: PingFangSC-Regular;
+            font-size: 10.6667vw;
+            color: #FFFFFF;
+        }
+        .scoreUnit{
+            position: absolute;
+            right: 37.7333vw;
+            top: 27.8667vw;
+            color: #fff;
+            font-size: 3.7333vw;
+            font-family: PingFangSC-Regular;
+        }
+        .safeScore{
+            position: absolute;
+            left:41.0667vw;
+            top: 38.4vw;
+            color: #fff;
+            font-size: 4.2667vw;
+            letter-spacing: 0;
+        }
         .score{
             height: 42.6667vw;
             width: 42.6667vw;
-            border: 6px solid #fff;
+            // border: 6px solid #fff;
             border-radius: 100%;
             margin: auto;
             margin-top: 6.1333vw;
+            margin-left: 28.2667vw;
             position: relative;
-            .scoreNumber{
-                position: absolute;
-                top: 13.3333vw;
-                right: 16.4667vw;
-                font-family: PingFangSC-Regular;
-                font-size: 10.6667vw;
-                color: #FFFFFF;
-            }
-            .scoreUnit{
-                position: absolute;
-                left: 30.2667vw;
-                top: 18.8vw;
-                color: #fff;
-                font-size: 3.7333vw;
-                font-family: PingFangSC-Regular;
-            }
-            .safeScore{
-                position: absolute;
-                left:12.8vw;
-                top: 29.3333vw;
-                color: #fff;
-                font-size: 4.2667vw;
-                letter-spacing: 0;
+            .mycircle{
+                stroke: #f00;
+                fill:rgba(0,0,0,0);
+                stroke-width: 0.8vw;
+                stroke-dasharray: 0  1000;
             }
         }
         .scoreRed{
@@ -61,9 +72,8 @@
             width: 66.6667vw;
             background:rgba(0, 0, 0, 0.1);
             border-radius: 100px;
-            margin: auto;
+            margin:4.2667vw auto;
             border: 1px solid transparent;
-            margin-top: 4.2667vw;
             display: flex;
             .riskWarn{
                 margin-left: 4.2667vw;
@@ -83,11 +93,15 @@
             .skip{
                 font-size: 4.8vw;
                 margin-left: 17.6vw;
-                margin-top: 2.9333vw;
+                line-height: 10.6667vw;
             }
+        }
+        .reset{
+            background: red;
         }
     }
     .warnList{
+        border: 1px solid transparent;
         .title{
             padding-top: 4.2667vw;
             padding-left: 4.2667vw;
@@ -99,11 +113,12 @@
             width: 100%;
             background:#fff ;
             padding: 4.2667vw;
-            padding-bottom: 2.6667vw;
+            margin-bottom: 2.6667vw;
             .earlyWarn{
                 display: flex;
                 font-size: 3.7333vw;
                 justify-content: space-between;
+                width: 91.4667vw;
                 .warntext{
                     flex: 1;
                     display: flex;

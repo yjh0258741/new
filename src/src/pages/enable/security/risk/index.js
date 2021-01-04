@@ -2,69 +2,112 @@ import React, { useEffect, useState,useRef } from 'react';
 import Head from 'next/head'
 import './index.less'
 import Link from 'next/link'
-import router from 'next/router'
 import {AppGetInsuranceAlarmSummaryList,AppGetInsuranceEvaluation,AppGetInsuranceDeviceStatus} from '../../../../models'
 import date from '../lib/time'
-import letter from '../lib/text'
-import classNames from 'classnames';
-
-export default function Home() {
-  const scoreRef = useRef();
-  const circleRef=useRef();
-  const [securitylist, securitylistfun] = useState([]);
+import store from '../rudex'
+import {withRouter} from 'next/router'
+import Reset from '../component/reset'
+import { isArray } from 'lodash';
+const risk=function Home({router}) {
+  const policyNumber=router.query.InsuranceNo;
+  const [securitylist, setSecuritylist] = useState([]);
   const [score, setScore] = useState([]);
+  const circle=useRef();
   const [devices,setDevices]=useState([]);
   const toSkipWarnDetails=(warnName)=>{
       router.push({
         pathname:'/enable/security/warnDetails',
         query:{
-            Name:warnName,
+            Name:warnName
         }
       });
   }
-  const AppGetInsuranceAlarmSummaryLists = async () => {
+  const AppGetInsuranceAlarmSummaryLists = async ({InsuranceNo=""}) => {
     try {
-     return await AppGetInsuranceAlarmSummaryList()
+     return await AppGetInsuranceAlarmSummaryList(InsuranceNo)
     } catch (e) {
       console.log(e);
     }
   }
-  const AppGetInsuranceEvaluations = async () => {
+  const AppGetInsuranceEvaluations = async ({InsuranceNo=""}) => {
     try {
-     return await AppGetInsuranceEvaluation()
+     return await AppGetInsuranceEvaluation(InsuranceNo)
     } catch (e) {
       console.log(e);
     }
   }
-  const AppGetInsuranceDeviceStatuslist = async () => {
+  const AppGetInsuranceDeviceStatuslist = async ({InsuranceNo=""}) => {
     try {
-     return await AppGetInsuranceDeviceStatus()
+     return await AppGetInsuranceDeviceStatus(InsuranceNo)
     } catch (e) {
       console.log(e);
     }
   }
   useEffect(()=>{
-    AppGetInsuranceAlarmSummaryLists().then((res)=>{
-      securitylistfun(res.AlarmSummaries);
-      console.log(res.AlarmSummaries);
+    AppGetInsuranceAlarmSummaryLists({InsuranceNo:policyNumber}).then((res)=>{
+      setSecuritylist(res.AlarmSummaries);
+      console.log();
     }).catch((err)=>{
       console.log(err);
-    })
-
-    AppGetInsuranceEvaluations().then((res)=>{
-      
-      setScore(res.Score);
-    }).catch((err)=>{
-      console.log(err);
-    })
-    AppGetInsuranceDeviceStatuslist().then((res)=>{
+    });
+    AppGetInsuranceDeviceStatuslist({InsuranceNo:policyNumber}).then((res)=>{
       setDevices(res.Devices);
     }).catch((err)=>{
       console.log(err);
-    })
+    });
   },[]);
-  function www(){
-    console.log(letter('超过的文字用省略号代替的js写法',22));
+  useEffect(()=>{
+    AppGetInsuranceEvaluations({InsuranceNo:policyNumber}).then((res)=>{
+      setScore(res.Score);
+    }).catch((err)=>{
+      console.log(err);
+    });
+    let progressRound =circle;
+    let jindu = 0;
+    let jinduLength = Math.PI*2;
+    if(score>=80){
+      progressRound.current && (progressRound.current.style.stroke='#00ff00')
+    }else if(score>=60){
+      progressRound.current && (progressRound.current.style.stroke='#ffff00')
+    }else{
+      progressRound.current && (progressRound.current.style.stroke='#f00')
+    }
+    let goFun = ()=>{
+        if(score==0){
+          return
+        }
+        jindu +=0.5 ;
+        let strokeLength = jinduLength*jindu ;
+        if(progressRound.current){
+          if(score>=35&&score<=50){
+            progressRound.current.style.strokeDasharray = (strokeLength-30)+" 1000";
+          }else{
+            progressRound.current.style.strokeDasharray = strokeLength+" 1000";
+          }
+        }
+        if( jindu >= score+10 ){
+            clearInterval( myset );
+        }
+    };
+    // 启动计时器
+    let myset = setInterval(function(){
+        goFun();
+    },5);
+    store.dispatch({type:'val',value:policyNumber});
+  },[score]);
+  function resetClick(){
+    AppGetInsuranceAlarmSummaryLists({InsuranceNo:policyNumber}).then((res)=>{
+        setSecuritylist(res.AlarmSummaries);
+       
+      }).catch((err)=>{
+        console.log(err);
+      });
+  
+      AppGetInsuranceEvaluations({InsuranceNo:policyNumber}).then((res)=>{
+        setScore(res.Score);
+      }).catch((err)=>{
+        console.log(err);
+      });
   }
   return (
     <div className="securityContainer">
@@ -73,9 +116,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
         <meta name="viewport" content="width=width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
       </Head>
-      <main className='top'>
-        <Link href='/enable/security/securityDetails'>
-          <div>    
+      <main className='top'>    
               {
                 devices.map((obj,item)=>{
                   return <div className='deviceStatus' key={item}>
@@ -83,26 +124,33 @@ export default function Home() {
                   </div> 
                 })
               }
-            <div className={classNames('score', {
-              'scoreGreen ': score>80&&score<100,
-              'scoreYello':score>60&&score<80,
-              'scoreRed':score<60
-              })}>
-                <div className='scoreNumber' >{score}</div>
-                <div className='scoreUnit'>分</div>
-                <div className='safeScore'>安全评分</div>
-            </div>
-          </div> 
-        </Link>
-        <Link href='/enable/securityDetails'>
-            <div className='risk'>
-                <div className='riskWarn'>
-                  <img src='/images/warn.png' />
-                </div>  
-                <div className='copeRisk'>待处理风险{securitylist.length}个</div>
-                <div className='skip'>&gt;</div>
-            </div>
-        </Link>
+              <Link href='/enable/security/securityDetails'>
+                  <div>
+                    <svg  viewBox="0 0 220 220" className='score '>
+                        <circle cx="110"  cy="110"   r = "110"fill="none"  stroke="#eee" strokeWidth="0.8vw">
+                        </circle>
+                        <circle cx="0"  cy="0"   r = "110" className="mycircle" ref={circle}
+                            transform="translate(110,110) rotate(-90)">
+                        </circle>
+                    </svg>
+                        <div className='scoreNumber' >{score}</div>
+                        <div className='scoreUnit'>分</div>
+                        <div className='safeScore'>安全评分</div>
+                  </div>
+              </Link>
+              {
+                  isArray(score)?
+                  <Reset resetClick={resetClick}></Reset>
+                  :<Link href='/enable/security/securityDetails'>
+                  <div className='risk'>
+                      <div className='riskWarn'>
+                        <img src='/images/warn.png' />
+                      </div>  
+                      <div className='copeRisk'>待处理风险{securitylist.length}个</div>
+                      <span className='skip'>&gt;</span>
+                  </div>
+                </Link>
+              }
       </main>
       <footer className='warnList'>
         <div className='title'>预警信息</div>
@@ -130,3 +178,4 @@ export default function Home() {
     </div>
   );
 }
+export default withRouter(risk)
