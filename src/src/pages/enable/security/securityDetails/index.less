@@ -1,3 +1,6 @@
+body{
+    height: 100%;
+}
 .detailsContainer{
     background: #F5F5F5;
     .top{
@@ -8,19 +11,29 @@
         display: flex;
         margin-bottom: 1.3333vw;
         background: #fff;
-        .score{
-            height: 32vw;
-            width: 32vw;
-            border: 0.8vw solid #0066ff;
-            border-radius: 100%;
-            margin-top: 4.2667vw;
-            margin-left: 4.2667vw;
-            color: #0066ff;
-            box-sizing: border-box;
-           .scoreNumber{
+        .circularRing{
+            position: relative;
+            .score{
+                height: 32vw;
+                width: 32vw;
+                border-radius: 100%;
+                margin-top: 4.2667vw;
+                margin-left: 4.2667vw;
+                color: #0066ff;
+                box-sizing: border-box;
+                .mycircle{
+                    stroke: #f00;
+                    fill:rgba(0,0,0,0);
+                    stroke-width: 0.8vw;
+                    stroke-dasharray: 0  1000;
+                }
+            }
+            .scoreNumber{
                 text-align: center;
-                line-height: 32vw; 
-                font-size: 10.6667vw;
+                font-size: 8.5333vw;
+                position: absolute;
+                left: 13.3333vw;
+                top: 14.9333vw;
             }
         }
         .evaluate{
